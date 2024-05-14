@@ -11,10 +11,11 @@
 				margin: 0;
 				padding: 0;
 				box-sizing: border-box;
-				background-color: aqua;
+				background-image: url("images/mymind-XUlsF9LYeVk-unsplash.jpg");
+				background-size: cover;
 			}
 
-			.container {
+			#container {
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -40,7 +41,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="container">
+		<div id="container">
 			<div id="video-container">
 				<video id="video" autoplay></video>
 				<button
@@ -50,7 +51,8 @@
 					Snapshot
 				</button>
 			</div>
-			<input type="file" id="imageInput" accept="image/*" capture="camera" />
+			<img id="img" display="none" />
+			<div id="output"></div>
 		</div>
 		<script src="index.js" type="module"></script>
 	</body>

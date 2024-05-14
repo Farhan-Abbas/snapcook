@@ -22,70 +22,64 @@ function startVideo() {
 		console.log("getUserMedia not supported");
 	}
 }
-
-// Capture a photo and display it
+// Capture photo and return the base64 image data
 function snapPhoto() {
-	var canvas = document.createElement("canvas");
-	canvas.width = video.videoWidth;
-	canvas.height = video.videoHeight;
-	var context = canvas.getContext("2d");
-	context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-	var imgData = canvas.toDataURL("image/png");
+    var canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    var context = canvas.getContext("2d");
+    context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+    var imgData = canvas.toDataURL("image/png");
 
-	// Convert Data URL to Blob
-	fetch(imgData)
-		.then((res) => res.blob())
-		.then((blob) => {
-			// Initialize Firebase Storage and create a reference
-			const storageRef = firebase.storage().ref();
-			const imgRef = storageRef.child("snapcook images/" + Date.now() + ".png");
+    var videoContainer = document.getElementById("video-container");
+    videoContainer.style.display = "none";
 
-			// Upload the Blob
-			imgRef.put(blob).then((snapshot) => {
-				console.log("Uploaded the image!");
-
-				// Optional: Get the download URL
-				snapshot.ref.getDownloadURL().then((downloadURL) => {
-					console.log("File available at", downloadURL);
-				});
-			});
-		});
-
-	// Display the captured image in an <img> element
-	var img = document.getElementById("img");
-	img.src = imgData;
-	var videoContainer = document.getElementById("video-container");
-	videoContainer.style.display = "none";
-	img.style.display = "block";
+    // Return the base64 image data
+    return imgData.split(",")[1];
 }
 
-async function getMessages() {
-	const backendEndpoint = "https://mike-tyson-chatbot..app/ap";
-	try {
-		const response = await fetch(backendEndpoint, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ message: message }),
-		});
-		const text = await response.text();
-		const data = JSON.parse(text);
-		if (response.ok) {
-			console.log(data["message"]);
-			console.log("Message received successfully!");
-			return data["message"];
-		} else {
-			console.error("Error receiving message!.");
-		}
-	} catch (error) {
-		console.error("Error sending data!", error);
-	}
+async function getItemsList(data) {
+    const backendEndpoint = "http://127.0.0.1:5000/api/foodItemsFinder";
+    try {
+        const response = await fetch(backendEndpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ data: data }),
+        });
+        const text = await response.text();
+        const parsedData = JSON.parse(text);
+        if (response.ok) {
+            console.log(parsedData.choices[0].message);
+            console.log("Message received successfully!");
+            return parsedData.choices[0].message;
+        } else {
+            console.error("Error receiving message!");
+        }
+    } catch (error) {
+        console.error("Error sending data!", error);
+    }
 }
 
 function onButtonClick() {
-	snapPhoto();
-	// var response = getMessages();
+	var base64ImgData = snapPhoto();
+	// var response = getItemsList(base64ImgData);
+	var response = "tomatoes, apples, chicken, eggs, milk";
+	var items = response.split(", "); // Split the string into an array of items
+
+	var ol = document.createElement("ol"); // Create an ordered list
+
+	items.forEach(function(item) {
+		var li = document.createElement("li"); // Create a list item for each element
+		li.textContent = item; // Set the text of the list item
+		ol.appendChild(li); // Append the list item to the ordered list
+	});
+
+	var output = document.getElementById("output");
+	output.innerHTML = ""; // Clear any existing content
+	output.appendChild(ol); // Append the ordered list to the output element
+	
 }
 
 // Call startVideo when the page loads
