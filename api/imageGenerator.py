@@ -54,21 +54,24 @@ def foodItemsAndRecipesFinder():
         "content": [
             {
             "type": "text",
-            "text": f"List up to 5 good recipes that are possible to make using the given food items. Be concise. Here are the food items available: {responseReturn[0]}"
+            "text": f"Please list up to 5 creative and simple recipes that can be made with the available food items: {responseReturn[0]}. Start your message directly with the recipe name, followed by a concise set of instructions formatted with numbered bullet points. Provide as many recipes as possible up to 5. If no recipes can be formulated, please explain why. The response should begin with the recipe name without any introductory messages."
             }
         ]
         }
     ],
     temperature=1,
-    max_tokens=256,
+    max_tokens=768,
     top_p=1,
     frequency_penalty=0,
     presence_penalty=0
     )
 
-    responseReturn.append(response.choices[0].message.content)
+    betterFormatofRecipeResponse = response.choices[0].message.content.split("\n")
+
+    responseReturn.append(betterFormatofRecipeResponse)
 
     print(responseReturn)
+
     return {'data': responseReturn}
 
 if __name__ == '__main__':

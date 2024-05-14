@@ -3,7 +3,7 @@ body {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	background-image: url("../images/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAzL3JtNjA0ZGVzaWduLWZvb2QtYmFja2dyb3VuZC1zaS0wNi1jLmpwZw.webp");
+	background-image: url("../images/a.jpg");
 	background-size: cover;
 	height: 100vh; /* Ensure the body takes the full viewport height */
 	width: 100vw; /* Ensure the body takes the full viewport width */
@@ -32,6 +32,7 @@ body {
 	transform: translateX(
 		-50%
 	); /* Adjust horizontal positioning to truly center */
+	background-color: #e3b8a9;
 }
 
 #output {
@@ -40,7 +41,7 @@ body {
 	align-items: center;
 	flex-wrap: wrap;
 	padding: 1.1rem;
-	font-family: "Satisfy", cursive;
+	font-family: "Roboto", cursive;
 	font-size: 1.1rem;
 	width: 100%;
 }
@@ -57,21 +58,35 @@ body {
 	cursor: pointer;
 }
 
-#loading {
-	display: none; /* Hidden by default */
-	border: 16px solid #f3f3f3; /* Light grey */
-	border-top: 16px solid #3498db; /* Blue */
-	border-radius: 50%;
-	width: 120px;
-	height: 120px;
-	animation: spin 2s linear infinite;
-	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
-	left: 50%;
-	top: 50%;
-	margin-left: -60px; /* Half of width */
-	margin-top: -60px; /* Half of height */
+#loadingContainer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 80px; /* Adjust based on your preference */
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+    position: fixed; /* Or absolute, depending on your needs */
+    top: 0px;
+    left: 0;
+    transform: translateY(-13%); /* Move up by 10% of the viewport height */
 }
+
+#loading {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+#loadingContainer h1 {
+    font-size: 2.2rem;
+    font-family: "Satisfy", sans-serif;
+    text-align: center; /* Ensure text is centered if container is wider */
+}
+
 
 @keyframes spin {
 	0% {
@@ -81,3 +96,13 @@ body {
 		transform: rotate(360deg);
 	}
 }
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+#loadingContainer h1 {
+    animation: blink 2s linear infinite;
+}
+

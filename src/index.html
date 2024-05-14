@@ -6,6 +6,9 @@
 		<link href="./output.css" rel="stylesheet" />
 		<link href="index.css" rel="stylesheet" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
 	</head>
 	<body>
 		<div id="F">
@@ -19,14 +22,18 @@
 			</div>
 			<img id="img" display="none" />
 		</div>
-		<div id="loading"></div>
+		<div id="loadingContainer">
+			<h1>Finding Delicious Recipes...</h1>
+			<div id="loading"></div>	
+		</div>	
 		<div id="output">
 			<div id="foodItems">
+				<br>
 			</div>
 			<br>
 			<div id="recipes">
-			</div>
 			<br>
+			</div>
 			<div id="buttonContainer">
 				<button id="snapNewPhoto" class="bg-red-500 text-white rounded-full p-2 mt-4 cursor-pointer">
 					Snap Another Picture

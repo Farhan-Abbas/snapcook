@@ -37,13 +37,13 @@ function snapPhoto() {
 	return imgData.split(",")[1];
 }
 
-// Assuming you have an HTML element with the ID 'loading' for the loading animation
-// <div id="loading" style="display:none;">Loading...</div>
+// Assuming you have an HTML element with the ID 'loadingContainer' for the loading animation
+// <div id="loadingContainer" style="display:none;">Loading...</div>
 
 async function getFoodItemsAndRecipes(data) {
 	const backendEndpoint = "http://127.0.0.1:5000/api/foodItemsAndRecipesFinder";
 	// Show loading animation
-	document.getElementById("loading").style.display = "block";
+	document.getElementById("loadingContainer").style.display = "flex";
 	try {
 		const response = await fetch(backendEndpoint, {
 			method: "POST",
@@ -65,14 +65,14 @@ async function getFoodItemsAndRecipes(data) {
 		console.error("Error sending data!", error);
 	} finally {
 		// Hide loading animation regardless of the outcome
-		document.getElementById("loading").style.display = "none";
+		document.getElementById("loadingContainer").style.display = "none";
 	}
 }
 
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
-	// var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
-	var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
+	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
+	// var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
 	var foodItemsElement = document.getElementById("foodItems");
 	var h2FoodItems = document.createElement("h2"); // Create an <h2> element for food items
 	h2FoodItems.textContent = "Food Items Found:"; // Set the text content of the <h2>
@@ -91,9 +91,14 @@ async function onButtonClick() {
 		h2Recipes.style.textDecoration = "underline";
 		recipesElement.appendChild(h2Recipes); // Append the <h2> to the recipes element
 
-		var recipesParagraph = document.createElement("p");
-		recipesParagraph.textContent = response[1]; // Assuming response[1] contains recipes
-		recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
+for(var i = 0; i < response[1].length; i++) {
+    var recipesParagraph = document.createElement("p");
+    recipesParagraph.textContent = response[1][i]; // Assuming response[1] contains recipes
+    recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
+
+    var breakElement = document.createElement("br"); // Create a break element
+    recipesElement.appendChild(breakElement); // Append the break after each paragraph
+}
 	}
 
 	var output = document.getElementById("output");
