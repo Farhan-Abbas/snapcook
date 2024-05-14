@@ -4,67 +4,12 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="./output.css" rel="stylesheet" />
-		<style>
-			/* Reset CSS for the video element and its container */
-			html,
-			body {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-				background-image: url("images/mymind-XUlsF9LYeVk-unsplash.jpg");
-				background-color: tomato;
-				background-size: cover;
-			}
-
-			#container {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				flex-direction: column;
-			}
-
-			#video {
-				height: 100vh; /* Set the video height to fill the screen height */
-				width: auto; /* Adjust width automatically to maintain aspect ratio */
-				object-fit: cover; /* Cover the available area, might crop the video */
-				max-width: 100%; /* Ensure it doesn't overflow on smaller screens */
-			}
-
-			#video-container {
-				position: relative;
-			}
-
-			#button {
-				position: absolute;
-				left: 50%;
-				transform: translate(-50%, -50%);
-			}
-
-			#output {
-				display: none;
-				justify-content: left;
-				align-items: center;
-				flex-wrap: wrap;
-				padding: 1rem;
-				font-family: 'Courier New', Courier, monospace;
-				font-size: 1.2rem;
-			}
-
-			#foodItemsList {
-				list-style-type: disc;
-				padding: 1.3rem;
-			}
-
-			#recipeList {
-				list-style-type: disc;
-				padding: 1.3rem;
-			}
-		</style>
+		<link href="index.css" rel="stylesheet" />
 	</head>
 	<body>
-		<div id="container">
+		<div id="F">
 			<div id="video-container">
-				<video id="video" autoplay></video>
+				<video id="video" autoplay muted></video>				
 				<button
 					id="button"
 					class="w-32 h-32 bg-red-500 text-white rounded-full flex items-center justify-center border-4 border-white cursor-pointer text-lg"
@@ -76,17 +21,14 @@
 		</div>
 		<div id="output">
 			<div id="foodItems">
-				<h2>Food Items Found:</h2>
-				<ol id="foodItemsList"></ol>
 			</div>
-			<br>
 			<div id="recipes">
-				<h2>Recipes:</h2>
-				<ol id="recipeList"></ol>
 			</div>
-			<button id="snapNewPhoto" class="bg-red-500 text-white rounded-full p-2 mt-4 cursor-pointer">
-				Snap Another Picture
-		</div>
+			<div id="buttonContainer">
+				<button id="snapNewPhoto" class="bg-red-500 text-white rounded-full p-2 mt-4 cursor-pointer">
+					Snap Another Picture
+				</button>
+			</div>
 		<script src="index.js" type="module"></script>
 	</body>
 </html>

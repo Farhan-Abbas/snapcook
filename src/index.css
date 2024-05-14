@@ -1,0 +1,64 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image: url("../images/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAzL3JtNjA0ZGVzaWduLWZvb2QtYmFja2dyb3VuZC1zaS0wNi1jLmpwZw.webp");
+    background-size: cover;
+    height: 100vh; /* Ensure the body takes the full viewport height */
+    width: 100vw; /* Ensure the body takes the full viewport width */
+    display: flex;
+}
+
+#video-container {
+    position: relative; /* This makes it a positioning context for absolutely positioned children */
+    width: 100vw; /* Cover the full viewport width */
+    height: 100vh; /* Cover the full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#video {
+    width: 100%; /* Make video width fill the container */
+    height: 100%; /* Make video height fill the container */
+    object-fit: cover; /* Cover the area without stretching */
+}
+
+#button {
+    position: absolute;
+    bottom: 20px; /* Adjust this value as needed to position the button from the bottom */
+    left: 50%; /* Center the button horizontally */
+    transform: translateX(-50%); /* Adjust horizontal positioning to truly center */
+}
+
+#output {
+    display: none;
+    justify-content: left;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+    width: 100%;
+}
+
+#foodItemsList {
+    padding: 1.1rem;
+}
+
+#recipeList {
+    padding: 1.1rem;
+}
+
+
+#buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#snapNewPhoto {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
