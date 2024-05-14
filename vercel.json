@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/foodItemsAndRecipesFinder",
+            "destination": "/api/foodItemsAndRecipesFinder"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
