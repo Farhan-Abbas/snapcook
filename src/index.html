@@ -12,6 +12,7 @@
 				padding: 0;
 				box-sizing: border-box;
 				background-image: url("images/mymind-XUlsF9LYeVk-unsplash.jpg");
+				background-color: tomato;
 				background-size: cover;
 			}
 
@@ -38,6 +39,26 @@
 				left: 50%;
 				transform: translate(-50%, -50%);
 			}
+
+			#output {
+				display: none;
+				justify-content: left;
+				align-items: center;
+				flex-wrap: wrap;
+				padding: 1rem;
+				font-family: 'Courier New', Courier, monospace;
+				font-size: 1.2rem;
+			}
+
+			#foodItemsList {
+				list-style-type: disc;
+				padding: 1.3rem;
+			}
+
+			#recipeList {
+				list-style-type: disc;
+				padding: 1.3rem;
+			}
 		</style>
 	</head>
 	<body>
@@ -52,7 +73,19 @@
 				</button>
 			</div>
 			<img id="img" display="none" />
-			<div id="output"></div>
+		</div>
+		<div id="output">
+			<div id="foodItems">
+				<h2>Food Items Found:</h2>
+				<ol id="foodItemsList"></ol>
+			</div>
+			<br>
+			<div id="recipes">
+				<h2>Recipes:</h2>
+				<ol id="recipeList"></ol>
+			</div>
+			<button id="snapNewPhoto" class="bg-red-500 text-white rounded-full p-2 mt-4 cursor-pointer">
+				Snap Another Picture
 		</div>
 		<script src="index.js" type="module"></script>
 	</body>
