@@ -1,8 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/api/foodItemsAndRecipesFinder",
-            "destination": "/api/foodItemsAndRecipesFinder"
+            "source": "/api/imageGenerator",
+            "destination": "/api/imageGenerator"
         },
         {
             "source": "/(.*)",
