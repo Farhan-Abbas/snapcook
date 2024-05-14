@@ -53,6 +53,7 @@ async function getFoodItemsAndRecipes(data) {
 			body: JSON.stringify({ data: data }),
 		});
 		const text = await response.text();
+		console.log(text);
 		const parsedData = JSON.parse(text);
 		if (response.ok) {
 			console.log(parsedData["data"]);
