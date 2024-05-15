@@ -74,14 +74,15 @@ async function onButtonClick() {
 	var base64ImgData = snapPhoto();
 	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
 	// var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
-	var foodItemsElement = document.getElementById("foodItems");
-	var h2FoodItems = document.createElement("h2"); // Create an <h2> element for food items
-	h2FoodItems.textContent = "Food Items Found:"; // Set the text content of the <h2>
-	h2FoodItems.style.textDecoration = "underline";
-	foodItemsElement.appendChild(h2FoodItems); // Append the <h2> to the foodItems element
 
 	// Ensure response is not undefined before attempting to access its properties
 	if (response && response.length > 0) {
+		var foodItemsElement = document.getElementById("foodItems");
+		var h2FoodItems = document.createElement("h2"); // Create an <h2> element for food items
+		h2FoodItems.textContent = "Food Items Found:"; // Set the text content of the <h2>
+		h2FoodItems.style.textDecoration = "underline";
+		foodItemsElement.appendChild(h2FoodItems); // Append the <h2> to the foodItems element
+	
 		var foodItemsParagraph = document.createElement("p");
 		foodItemsParagraph.textContent = response[0]; // Assuming response[0] contains food items
 		foodItemsElement.appendChild(foodItemsParagraph);
@@ -92,14 +93,21 @@ async function onButtonClick() {
 		h2Recipes.style.textDecoration = "underline";
 		recipesElement.appendChild(h2Recipes); // Append the <h2> to the recipes element
 
-for(var i = 0; i < response[1].length; i++) {
-    var recipesParagraph = document.createElement("p");
-    recipesParagraph.textContent = response[1][i]; // Assuming response[1] contains recipes
-    recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
+		for(var i = 0; i < response[1].length; i++) {
+			var recipesParagraph = document.createElement("p");
+			recipesParagraph.textContent = response[1][i]; // Assuming response[1] contains recipes
+			recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
 
-    var breakElement = document.createElement("br"); // Create a break element
-    recipesElement.appendChild(breakElement); // Append the break after each paragraph
-}
+			var breakElement = document.createElement("br"); // Create a break element
+			recipesElement.appendChild(breakElement); // Append the break after each paragraph
+		}
+
+	}
+	else {
+		var foodItemsElement = document.getElementById("foodItems");
+		var errorMsg = document.createElement("p");
+		errorMsg.textContent = "An Error Occured. Please try again!";
+		foodItemsElement.appendChild(errorMsg);
 	}
 
 	var output = document.getElementById("output");

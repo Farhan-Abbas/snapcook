@@ -106,3 +106,14 @@ body {
     animation: blink 2s linear infinite;
 }
 
+#clickMessage {
+	position: absolute;
+	top: 5%; /* Adjust as needed */
+	left: 0; /* Align to the left edge */
+	width: 100%; /* Make it take the full width */
+	text-align: center; /* Center the text within */
+	color: #e3b8a9;
+	font-size: 30px;
+	z-index: 2; /* Ensure it's above the video */
+	font-family: "Roboto", cursive;
+}
