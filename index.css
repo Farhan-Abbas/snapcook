@@ -119,7 +119,7 @@ body {
 }
 
 
-#clickMeButton {
+#button {
 	width: 8rem; /* w-32 */
 	height: 8rem; /* h-32 */
 	background-color: #f56565; /* bg-red-500 */
