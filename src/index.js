@@ -41,7 +41,7 @@ function snapPhoto() {
 // <div id="loadingContainer" style="display:none;">Loading...</div>
 
 async function getFoodItemsAndRecipes(data) {
-	const backendEndpoint = "https://snapcook-bice.vercel.app/api/foodItemsAndRecipesFinder";
+	const backendEndpoint = "http://127.0.0.1:5000/api/foodItemsAndRecipesFinder";
 	// Show loading animation
 	document.getElementById("loadingContainer").style.display = "flex";
 	try {
