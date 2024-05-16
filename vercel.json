@@ -5,6 +5,10 @@
             "destination": "/api/foodItemsAndRecipesFinder"
         },
         {
+            "source": "/(.*).(js|css|png|jpg|jpeg|gif|svg|ico)",
+            "destination": "/src/$1.$2"
+        },
+        {
             "source": "/(.*)",
             "destination": "/src/index.html"
         }
