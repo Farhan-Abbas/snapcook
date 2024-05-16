@@ -26,7 +26,7 @@ def chat():
     temperature=1,
     max_tokens=256,
   )
-  return {'message': response.choices[0].message.content}
+  return {'message': ["apple", response.choices[0].message.content]}
 
 # if __name__ == '__main__':
 #   app.run(debug=True)
