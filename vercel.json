@@ -1,12 +1,16 @@
 {
     "rewrites": [
         {
-            "source": "/api/foodItemsAndRecipesFinder",
-            "destination": "/api/foodItemsAndRecipesFinder"
+            "source": "/api/(.*)",
+            "destination": "/api/$1"
+        },
+        {
+            "source": "/(.*).(js|css|png|jpg|jpeg|gif|svg|ico)",
+            "destination": "/$1.$2"
         },
         {
             "source": "/(.*)",
-            "destination": "/src/index.html"
+            "destination": "/index.html"
         }
     ]
 }
