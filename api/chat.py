@@ -4,7 +4,7 @@ from flask_cors import CORS
 from openai import OpenAI
 
 app = Flask(__name__)
-CORS(app, origins=['https://mike-tyson-chatbot.vercel.app'])
+CORS(app, origins=['https://snapcook-bice.vercel.app'])
 
 client = OpenAI()
 
