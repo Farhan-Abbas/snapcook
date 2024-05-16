@@ -9,7 +9,7 @@ CORS(app, origins=['https://snapcook-bice.vercel.app'])
 client = OpenAI()
 
 # Use an environment variable for the API key
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.environ.get('OPENAI_API_KEY')
 
 @app.route('/api/foodItemsAndRecipesFinder', methods=['POST'])
 def foodItemsAndRecipesFinder():
