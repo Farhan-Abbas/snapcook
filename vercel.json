@@ -1,12 +1,12 @@
 {
     "rewrites": [
         {
-            "source": "/api/chat",
-            "destination": "/api/chat"
+            "source": "/api/foodItemsAndRecipesFinder",
+            "destination": "/api/foodItemsAndRecipesFinder"
         },
         {
             "source": "/(.*)",
-            "destination": "/index.html"
+            "destination": "/src/index.html"
         }
     ]
 }
