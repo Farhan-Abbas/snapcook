@@ -41,35 +41,34 @@ function snapPhoto() {
 // <div id="loadingContainer" style="display:none;">Loading...</div>
 
 async function getFoodItemsAndRecipes(data) {
-	const backendEndpoint = "https://snapcook-bice.vercel.app/api/foodItemsAndRecipesFinder";
-	// Show loading animation
-	document.getElementById("loadingContainer").style.display = "flex";
-	try {
-		const response = await fetch(backendEndpoint, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ data: data }),
-		});
-		const text = await response.text();
-		console.log(text);
-		const parsedData = JSON.parse(text);
-		if (response.ok) {
-			console.log(parsedData["data"]);
-			console.log("Message received successfully!");
-			return parsedData["data"];
-		} else {
-			console.error("Error receiving message!");
-		}
-	} catch (error) {
-		console.error("Error sending data!", error);
-	} finally {
-		// Hide loading animation regardless of the outcome
-		document.getElementById("loadingContainer").style.display = "none";
-	}
+    const backendEndpoint = "https://snapcook-bice.vercel.app/api/foodItemsAndRecipesFinder";
+    document.getElementById("loadingContainer").style.display = "flex";
+    try {
+        const response = await fetch(backendEndpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ data: data }),
+        });
+        // Check if the response is OK and content type is JSON before parsing
+        if (response.ok && response.headers.get("Content-Type").includes("application/json")) {
+            const jsonData = await response.json();
+            console.log(jsonData["data"]);
+            console.log("Message received successfully!");
+            return jsonData["data"];
+        } else {
+            // Handle non-JSON responses or errors
+            console.error("Error receiving message or non-JSON response!");
+            const text = await response.text(); // Log the raw response for debugging
+            console.log(text);
+        }
+    } catch (error) {
+        console.error("Error sending data!", error);
+    } finally {
+        document.getElementById("loadingContainer").style.display = "none";
+    }
 }
-
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
 	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
