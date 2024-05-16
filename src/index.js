@@ -3,22 +3,34 @@ let stream;
 
 // Start the video stream
 function startVideo() {
-	if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-		navigator.mediaDevices
-			.getUserMedia({
-				video: true, // Request video without specifying an aspect ratio
-			})
-			.then(function (stream) {
-				video = document.getElementById("video"); // Assign to the global variable
-				video.srcObject = stream;
-				video.play();
-			})
-			.catch(function (err) {
-				console.log(err.name + ": " + err.message);
-			});
-	} else {
-		console.log("getUserMedia not supported");
-	}
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+            .getUserMedia({
+                video: { facingMode: "environment" } // Request back camera
+            })
+            .then(function (stream) {
+                video = document.getElementById("video"); // Assign to the global variable
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(function (err) {
+                console.log(err.name + ": " + err.message);
+                // Optionally, fall back to the front camera if the back camera is not available
+                navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: "user" } // Fallback to front camera
+                })
+                .then(function (stream) {
+                    video = document.getElementById("video");
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function (err) {
+                    console.log("Unable to access the camera: " + err.name + ": " + err.message);
+                });
+            });
+    } else {
+        console.log("getUserMedia not supported");
+    }
 }
 
 // Capture photo and return the base64 image data
