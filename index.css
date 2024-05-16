@@ -125,13 +125,9 @@ body {
 	background-color: #f56565; /* bg-red-500 */
 	color: white; /* text-white */
 	border-radius: 9999px; /* rounded-full */
-	display: flex; /* flex */
-	align-items: center; /* items-center */
-	justify-content: center; /* justify-center */
 	border: 4px solid white; /* border-4 border-white */
 	cursor: pointer; /* cursor-pointer */
 	font-size: 1.125rem; /* text-lg */
-	position: relative; /* relative */
 }
 
 #button i {
