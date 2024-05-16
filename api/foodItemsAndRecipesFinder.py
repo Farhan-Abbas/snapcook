@@ -5,7 +5,7 @@ import os
 import requests
 
 app = Flask(__name__)
-CORS(app, origins=['https://snapcook-bice.vercel.app'])
+CORS(app)
 client = OpenAI()
 
 # Use an environment variable for the API key
