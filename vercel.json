@@ -1,8 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/api/foodItemsAndRecipesFinder",
-            "destination": "/api/foodItemsAndRecipesFinder"
+            "source": "/api/chat",
+            "destination": "/api/chat"
         },
         {
             "source": "/(.*)",
