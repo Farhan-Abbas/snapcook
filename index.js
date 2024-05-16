@@ -52,10 +52,10 @@ async function getFoodItemsAndRecipes(data) {
             body: JSON.stringify({ data: data }),
         });
 		const text = await response.json();
-		const data = JSON.parse(text)
+		const jsonData = JSON.parse(text)
         if (response.ok) {
             console.log("Message received successfully!");
-            return data["data"];
+            return jsonData["data"];
         } else {
             console.error("Error receiving message or non-JSON response!");
         }
