@@ -51,22 +51,16 @@ async function getFoodItemsAndRecipes(data) {
             },
             body: JSON.stringify({ data: data }),
         });
-        if (response.ok && response.headers.get("Content-Type").includes("application/json")) {
-            const jsonData = await response.json();
+		const text = await response.json();
+		const data = JSON.parse(text)
+        if (response.ok) {
             console.log("Message received successfully!");
-            return jsonData["data"];
+            return data["data"];
         } else {
-            // Improved error handling for non-JSON responses or server errors
             console.error("Error receiving message or non-JSON response!");
-            const text = await response.text(); // Log the raw response for debugging
-            console.error("Response status:", response.status, "Response body:", text);
-            // Consider adding user-friendly error handling here
-            return null; // Return null or a default value to handle this case gracefully
         }
     } catch (error) {
         console.error("Error sending data!", error);
-        // Handle fetch errors (network issues, etc.)
-        // Consider showing a user-friendly message or retry mechanism
     } finally {
         document.getElementById("loadingContainer").style.display = "none";
     }
