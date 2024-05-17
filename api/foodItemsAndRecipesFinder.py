@@ -42,9 +42,9 @@ def foodItemsAndRecipesFinder():
         "max_tokens": 300
     }
 
-    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+    foodItemsResponse = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
-    responseReturn.append(response.json()['choices'][0]['message']['content'])
+    responseReturn.append(foodItemsResponse.json()['choices'][0]['message']['content'])
 
     response = client.chat.completions.create(
     model="gpt-4o",

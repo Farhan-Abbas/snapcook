@@ -63,7 +63,7 @@ async function getFoodItemsAndRecipes(data) {
             },
             body: JSON.stringify({ data: data }),
         });
-        if (response.ok && response.headers.get("Content-Type").includes("application/json")) {
+        if (response.ok) {
             const jsonData = await response.json();
             console.log("Message received successfully!");
             return jsonData["data"];
