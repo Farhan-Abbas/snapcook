@@ -52,6 +52,14 @@ body::before {
 	width: 100%;
 }
 
+#output h1 {
+	font-size: 1.5rem;
+}
+
+#output h2 {
+	font-size: 1.3rem;
+}
+
 #buttonContainer {
 	display: flex;
 	justify-content: center;

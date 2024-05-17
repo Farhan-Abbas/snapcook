@@ -86,30 +86,34 @@ async function getFoodItemsAndRecipes(data) {
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
 	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
-	// var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
+	var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
 	console.log(response);
 	console.log(JSON.stringify(response));
 	// Ensure response is not undefined before attempting to access its properties
 	if (response && response.length > 0) {
 		var foodItemsElement = document.getElementById("foodItems");
-		var h2FoodItems = document.createElement("h2"); // Create an <h2> element for food items
+		var h2FoodItems = document.createElement("h1"); // Create an <h2> element for food items
 		h2FoodItems.textContent = "Food Items Found:"; // Set the text content of the <h2>
 		h2FoodItems.style.textDecoration = "underline";
 		foodItemsElement.appendChild(h2FoodItems); // Append the <h2> to the foodItems element
-	
+		var breakElementForFoodItems = document.createElement("br"); // Create a break element
+		foodItemsElement.appendChild(breakElementForFoodItems); // Append the break after each paragraph
+
 		var foodItemsParagraph = document.createElement("p");
 		foodItemsParagraph.textContent = response[0]; // Assuming response[0] contains food items
 		foodItemsElement.appendChild(foodItemsParagraph);
 
 		var recipesElement = document.getElementById("recipes");
-		var h2Recipes = document.createElement("h2"); // Create an <h2> element for recipes
+		var h2Recipes = document.createElement("h1"); // Create an <h2> element for recipes
 		h2Recipes.textContent = "Recipes:"; // Set the text content of the <h2>
 		h2Recipes.style.textDecoration = "underline";
 		recipesElement.appendChild(h2Recipes); // Append the <h2> to the recipes element
+		var breakElementForRecipes = document.createElement("br"); // Create a break element
+		recipesElement.appendChild(breakElementForRecipes); // Append the break after each paragraph
 
 		for(var i = 0; i < response[1].length; i++) {
 			if (response[1][i].includes("###")){
-				var heading = document.createElement("h3");
+				var heading = document.createElement("h2");
 				heading.textContent = response[1][i].replace("###", "");
 				recipesElement.appendChild(heading);
 
