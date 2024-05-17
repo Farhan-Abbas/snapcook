@@ -119,7 +119,7 @@ async function onButtonClick() {
 	else {
 		var foodItemsElement = document.getElementById("foodItems");
 		var errorMsg = document.createElement("p");
-		errorMsg.textContent = "An Error Occured. Please try again!";
+		errorMsg.textContent = "An Error Occured" + {response} + "Please try again!";
 		foodItemsElement.appendChild(errorMsg);
 	}
 
