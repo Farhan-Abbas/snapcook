@@ -78,8 +78,6 @@ async function getFoodItems(data) {
     } catch (error) {
         console.error("Error sending data!", error);
 		return null;
-    } finally {
-        document.getElementById("loadingContainer").style.display = "none";
     }
 }
 
@@ -116,7 +114,7 @@ async function getRecipes(data) {
 
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
-	var foodItems = await identifyFoodItems(base64ImgData); // Wait for the promise to resolve
+	var foodItems = await getFoodItems(base64ImgData); // Wait for the promise to resolve
 	var recipeMsg = await getRecipes(foodItems); // Wait for the promise to resolve
 	// var foodItems = "Apple, Banana, Orange";
 	// var recipeMsg = "Apple Pie, Banana Bread, Orange Juice"; // Mock response
