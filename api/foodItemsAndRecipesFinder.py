@@ -70,8 +70,6 @@ def foodItemsAndRecipesFinder():
 
     responseReturn.append(betterFormatofRecipeResponse)
 
-    print(responseReturn)
-
     return {'data': responseReturn}
 
 if __name__ == '__main__':
