@@ -90,7 +90,7 @@ async function onButtonClick() {
 	console.log(response);
 	console.log(JSON.stringify(response));
 	// Ensure response is not undefined before attempting to access its properties
-	if (response && response.length > 0) {
+	if (response && response.length > 1) {
 		var foodItemsElement = document.getElementById("foodItems");
 		var h2FoodItems = document.createElement("h1"); // Create an <h2> element for food items
 		h2FoodItems.textContent = "Food Items Found:"; // Set the text content of the <h2>
