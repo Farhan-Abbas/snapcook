@@ -114,11 +114,21 @@ async function onButtonClick() {
 		for(var i = 0; i < response[1].length; i++) {
 			if (response[1][i].includes("###")){
 				var heading = document.createElement("h2");
-				heading.textContent = response[1][i].replace("###", i + 1 + ". ");
+				if (response[1][i].includes("**")) {
+					response[1][i].replace("**", "");
+				}
+				heading.textContent = response[1][i].replace("###", "Recipe " + i + 1 + ". ");
 				recipesElement.appendChild(heading);
 
-				var breakElement = document.createElement("br"); // Create a break element
-				recipesElement.appendChild(breakElement); // Append the break after each paragraph
+				var breakElementForPara = document.createElement("br"); // Create a break element
+				recipesElement.appendChild(breakElementForPara); // Append the break after each paragraph
+
+				var steps = document.createElement("p");
+				steps.textContent = "Steps: ";
+				recipesElement.appendChild(steps);
+
+				var breakElementForSteps = document.createElement("br"); // Create a break element
+				recipesElement.appendChild(breakElementForSteps); // Append the break after each paragraph
 			}
 			else {
 				var recipesParagraph = document.createElement("p");
