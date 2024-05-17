@@ -1,27 +1,24 @@
-html,
-body {
+html, body {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	min-height: 100vh; /* Ensure the body covers at least the full viewport height */
-	width: 100vw;
-	display: flex;
-	flex-direction: column; /* Adjust the flex direction if needed to accommodate your layout */
+	height: 100%; /* Use 100% instead of 100vh to avoid resizing issues */
+	width: 100%;
 }
 
 body::before {
 	content: "";
-	position: fixed; /* This will ensure the background covers the entire viewport at all times */
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
 	background-image: url("../images/a.jpg");
 	background-size: cover;
+	background-position: 10% 0; /* Shift the background image to the right */
 	opacity: 0.5;
 	z-index: -1;
 }
-
 #video-container {
 	position: relative; /* This makes it a positioning context for absolutely positioned children */
 	width: 100vw; /* Cover the full viewport width */
