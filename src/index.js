@@ -111,7 +111,7 @@ async function onButtonClick() {
 		var breakElementForRecipes = document.createElement("br"); // Create a break element
 		recipesElement.appendChild(breakElementForRecipes); // Append the break after each paragraph
 
-		for(var i = 0; i < response[1].length; i++) {
+		for(var i = 0; i < response[1].length; i++) { 
 			if (response[1][i].includes("###")){
 				var heading = document.createElement("h2");
 				if (response[1][i].includes("**")) {
