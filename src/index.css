@@ -16,9 +16,11 @@ body::before {
 	background-image: url("../images/a.jpg");
 	background-size: cover;
 	background-position: 10% 0; /* Shift the background image to the right */
+	background-attachment: fixed; /* Keep the background fixed during scroll */
 	opacity: 0.5;
 	z-index: -1;
 }
+
 #video-container {
 	position: relative; /* This makes it a positioning context for absolutely positioned children */
 	width: 100vw; /* Cover the full viewport width */
