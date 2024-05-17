@@ -73,7 +73,7 @@ async function getFoodItemsAndRecipes(data) {
             const text = await response.text(); // Log the raw response for debugging
             console.error("Response status:", response.status, "Response body:", text);
             // Consider adding user-friendly error handling here
-            return null; // Return null or a default value to handle this case gracefully
+            return text; // Return null or a default value to handle this case gracefully
         }
     } catch (error) {
         console.error("Error sending data!", error);
@@ -143,7 +143,7 @@ async function onButtonClick() {
 	else {
 		var foodItemsElement = document.getElementById("foodItems");
 		var errorMsg = document.createElement("p");
-		errorMsg.textContent = "An Error Occured: " + JSON.stringify(response) + ". Please try again!";
+		errorMsg.textContent = "An Error Occured: " + response + ". Please try again!";
 		foodItemsElement.appendChild(errorMsg);
 	}
 
