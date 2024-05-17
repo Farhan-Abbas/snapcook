@@ -1,14 +1,6 @@
 {
     "rewrites": [
         {
-            "source": "/api/identifyFoodItems",
-            "destination": "/api/identifyFoodItems"
-        },
-        {
-            "source": "/api/generateRecipes",
-            "destination": "/api/generateRecipes"
-        },
-        {
             "source": "/(.*).(js|css|png|jpg|jpeg|gif|svg|ico)",
             "destination": "/src/$1.$2"
         },
