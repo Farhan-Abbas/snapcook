@@ -85,8 +85,8 @@ async function getFoodItemsAndRecipes(data) {
 }
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
-	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
-	// var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
+	// var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
+	var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
 	console.log(response);
 	console.log(JSON.stringify(response));
 	// Ensure response is not undefined before attempting to access its properties
@@ -108,12 +108,22 @@ async function onButtonClick() {
 		recipesElement.appendChild(h2Recipes); // Append the <h2> to the recipes element
 
 		for(var i = 0; i < response[1].length; i++) {
-			var recipesParagraph = document.createElement("p");
-			recipesParagraph.textContent = response[1][i]; // Assuming response[1] contains recipes
-			recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
+			if (response[1][i].includes("###")){
+				var heading = document.createElement("h3");
+				heading.textContent = response[1][i].replace("###", "");
+				recipesElement.appendChild(heading);
 
-			var breakElement = document.createElement("br"); // Create a break element
-			recipesElement.appendChild(breakElement); // Append the break after each paragraph
+				var breakElement = document.createElement("br"); // Create a break element
+				recipesElement.appendChild(breakElement); // Append the break after each paragraph
+			}
+			else {
+				var recipesParagraph = document.createElement("p");
+				recipesParagraph.textContent = response[1][i]; // Assuming response[1] contains recipes
+				recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
+	
+				var breakElement = document.createElement("br"); // Create a break element
+				recipesElement.appendChild(breakElement); // Append the break after each paragraph	
+			}
 		}
 	}
 	else {
