@@ -52,8 +52,8 @@ function snapPhoto() {
 // Assuming you have an HTML element with the ID 'loadingContainer' for the loading animation
 // <div id="loadingContainer" style="display:none;">Loading...</div>
 
-async function getFoodItems(data) {
-    const backendEndpoint = "https://snapcook-bice.vercel.app/api/identifyFoodItems";
+async function getFoodItemsAndRecipes(data) {
+    const backendEndpoint = "https://snapcook-bice.vercel.app/api/foodItemsAndRecipesFinder";
     document.getElementById("loadingContainer").style.display = "flex";
     try {
         const response = await fetch(backendEndpoint, {
@@ -66,61 +66,31 @@ async function getFoodItems(data) {
         if (response.ok) {
             const jsonData = await response.json();
             console.log("Message received successfully!");
-            return jsonData["foodItems"];
+            return jsonData["data"];
         } else {
             // Improved error handling for non-JSON responses or server errors
             console.error("Error receiving message or non-JSON response!");
             const text = await response.text(); // Log the raw response for debugging
             console.error("Response status:", response.status, "Response body:", text);
             // Consider adding user-friendly error handling here
-            return null; // Return null or a default value to handle this case gracefully
+            return text; // Return null or a default value to handle this case gracefully
         }
     } catch (error) {
         console.error("Error sending data!", error);
-		return null;
+        // Handle fetch errors (network issues, etc.)
+        // Consider showing a user-friendly message or retry mechanism
+    } finally {
+        document.getElementById("loadingContainer").style.display = "none";
     }
 }
-
-async function getRecipes(data) {
-	const backendEndpoint = "https://snapcook-bice.vercel.app/api/generateRecipes";
-	try {
-		const response = await fetch(backendEndpoint, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ data: data }),
-		});
-		if (response.ok) {
-			const jsonData = await response.json();
-			console.log("Message received successfully!");
-			return jsonData["recipeMsg"];
-		} else {
-			// Improved error handling for non-JSON responses or server errors
-			console.error("Error receiving message or non-JSON response!");
-			const text = await response.text(); // Log the raw response for debugging
-			console.error("Response status:", response.status, "Response body:", text);
-			// Consider adding user-friendly error handling here
-			return null; // Return null or a default value to handle this case gracefully
-		}
-	} catch (error) {
-		console.error("Error sending data!", error);
-		return null;
-	} finally {
-		document.getElementById("loadingContainer").style.display = "none";
-	}
-}
-
-
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
-	var foodItems = await getFoodItems(base64ImgData); // Wait for the promise to resolve
-	var recipeMsg = await getRecipes(foodItems); // Wait for the promise to resolve
-	// var foodItems = "Apple, Banana, Orange";
-	// var recipeMsg = "Apple Pie, Banana Bread, Orange Juice"; // Mock response
-
+	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
+	// var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
+	console.log(response);
+	console.log(JSON.stringify(response));
 	// Ensure response is not undefined before attempting to access its properties
-	if (foodItems && recipeMsg) {
+	if (response && response.length > 1) {
 		var foodItemsElement = document.getElementById("foodItems");
 		var h2FoodItems = document.createElement("h1"); // Create an <h2> element for food items
 		h2FoodItems.textContent = "Food Items Found:"; // Set the text content of the <h2>
@@ -130,7 +100,7 @@ async function onButtonClick() {
 		foodItemsElement.appendChild(breakElementForFoodItems); // Append the break after each paragraph
 
 		var foodItemsParagraph = document.createElement("p");
-		foodItemsParagraph.textContent = foodItems[0];
+		foodItemsParagraph.textContent = response[0]; // Assuming response[0] contains food items
 		foodItemsElement.appendChild(foodItemsParagraph);
 
 		var recipesElement = document.getElementById("recipes");
@@ -141,13 +111,13 @@ async function onButtonClick() {
 		var breakElementForRecipes = document.createElement("br"); // Create a break element
 		recipesElement.appendChild(breakElementForRecipes); // Append the break after each paragraph
 
-		for(var i = 0; i < recipeMsg.length; i++) { 
-			if (recipeMsg[i].includes("###")){
+		for(var i = 0; i < response[1].length; i++) { 
+			if (response[1][i].includes("###")){
 				var heading = document.createElement("h2");
-				if (recipeMsg[i].includes("**")) {
-					recipeMsg[i] = recipeMsg[i].replace(/\*\*/g, "") // Remove all occurrences of "**"
+				if (response[1][i].includes("**")) {
+					response[1][i] = response[1][i].replace(/\*\*/g, "") // Remove all occurrences of "**"
 				}
-				heading.textContent = recipeMsg[i].replace("###", "● ");
+				heading.textContent = response[1][i].replace("###", "● ");
 				recipesElement.appendChild(heading);
 
 				var breakElementForPara = document.createElement("br"); // Create a break element
@@ -162,7 +132,7 @@ async function onButtonClick() {
 			}
 			else {
 				var recipesParagraph = document.createElement("p");
-				recipesParagraph.textContent = recipeMsg[i]; // Assuming response[1] contains recipes
+				recipesParagraph.textContent = response[1][i]; // Assuming response[1] contains recipes
 				recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
 	
 				var breakElement = document.createElement("br"); // Create a break element
@@ -173,12 +143,7 @@ async function onButtonClick() {
 	else {
 		var foodItemsElement = document.getElementById("foodItems");
 		var errorMsg = document.createElement("p");
-		if (foodItems == null) {
-			errorMsg.textContent = "An Error Occured: " + foodItems + ". Please try again!";
-		}
-		else {
-			errorMsg.textContent = "An Error Occured: " + recipeMsg + ". Please try again!";
-		}
+		errorMsg.textContent = "An Error Occured: " + response + ". Please try again!";
 		foodItemsElement.appendChild(errorMsg);
 	}
 

@@ -11,8 +11,9 @@ client = OpenAI()
 # Use an environment variable for the API key
 api_key = os.getenv("OPENAI_API_KEY")
 
-@app.route('/api/identifyFoodItems', methods=['POST'])
-def identifyFoodItems():
+@app.route('/api/foodItemsAndRecipesFinder', methods=['POST'])
+def foodItemsAndRecipesFinder():
+    responseReturn = []
     base64_image = request.json.get('data')
     headers = {
         "Content-Type": "application/json",
@@ -43,12 +44,8 @@ def identifyFoodItems():
 
     foodItemsResponse = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
-    return {'foodItems' : foodItemsResponse.json()['choices'][0]['message']['content']}
+    responseReturn.append(foodItemsResponse.json()['choices'][0]['message']['content'])
 
- 
-@app.route('/api/generateRecipes', methods=['POST'])
-def generateRecipes():
-    foodItems = request.json.get('data')
     response = client.chat.completions.create(
     model="gpt-4o",
     messages=[
@@ -57,7 +54,7 @@ def generateRecipes():
         "content": [
             {
             "type": "text",
-            "text": f"Please list up to 5 creative and simple recipes that can be made with the available food items: {foodItems}. Start your message directly with the recipe name, followed by a concise set of instructions formatted with numbered bullet points. Provide as many recipes as possible up to 5. If no recipes can be formulated, please explain why. The response should begin with the recipe name without any introductory messages."
+            "text": f"Please list up to 5 creative and simple recipes that can be made with the available food items: {responseReturn[0]}. Start your message directly with the recipe name, followed by a concise set of instructions formatted with numbered bullet points. Provide as many recipes as possible up to 5. If no recipes can be formulated, please explain why. The response should begin with the recipe name without any introductory messages."
             }
         ]
         }
@@ -69,9 +66,13 @@ def generateRecipes():
     presence_penalty=0
     )
 
-    return {'recipeMsg' : response.choices[0].message.content.split("\n")}
+    betterFormatofRecipeResponse = response.choices[0].message.content.split("\n")
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+    responseReturn.append(betterFormatofRecipeResponse)
+
+    return {'data': responseReturn}
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
