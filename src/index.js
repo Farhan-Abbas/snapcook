@@ -87,7 +87,8 @@ async function onButtonClick() {
 	var base64ImgData = snapPhoto();
 	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
 	// var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
-
+	console.log(response);
+	console.log(JSON.stringify(response));
 	// Ensure response is not undefined before attempting to access its properties
 	if (response && response.length > 0) {
 		var foodItemsElement = document.getElementById("foodItems");
@@ -114,12 +115,11 @@ async function onButtonClick() {
 			var breakElement = document.createElement("br"); // Create a break element
 			recipesElement.appendChild(breakElement); // Append the break after each paragraph
 		}
-
 	}
 	else {
 		var foodItemsElement = document.getElementById("foodItems");
 		var errorMsg = document.createElement("p");
-		errorMsg.textContent = "An Error Occured:" + {response} + "Please try again!";
+		errorMsg.textContent = "An Error Occured: " + JSON.stringify(response) + ". Please try again!";
 		foodItemsElement.appendChild(errorMsg);
 	}
 
