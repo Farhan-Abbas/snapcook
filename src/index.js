@@ -117,7 +117,7 @@ async function onButtonClick() {
 				if (response[1][i].includes("**")) {
 					response[1][i] = response[1][i].replace(/\*\*/g, "") // Remove all occurrences of "**"
 				}
-				heading.textContent = response[1][i].replace("###", "Recipe " + i + 1 + ". ");
+				heading.textContent = response[1][i].replace("###", "● ");
 				recipesElement.appendChild(heading);
 
 				var breakElementForPara = document.createElement("br"); // Create a break element
