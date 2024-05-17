@@ -73,7 +73,7 @@ async function getFoodItemsAndRecipes(data) {
             const text = await response.text(); // Log the raw response for debugging
             console.error("Response status:", response.status, "Response body:", text);
             // Consider adding user-friendly error handling here
-            return text; // Return null or a default value to handle this case gracefully
+            return null; // Return null or a default value to handle this case gracefully
         }
     } catch (error) {
         console.error("Error sending data!", error);
@@ -90,7 +90,7 @@ async function onButtonClick() {
 	console.log(response);
 	console.log(JSON.stringify(response));
 	// Ensure response is not undefined before attempting to access its properties
-	if (response && response.length > 1) {
+	if (response && response.length > 0) {
 		var foodItemsElement = document.getElementById("foodItems");
 		var h2FoodItems = document.createElement("h1"); // Create an <h2> element for food items
 		h2FoodItems.textContent = "Food Items Found:"; // Set the text content of the <h2>
@@ -143,7 +143,7 @@ async function onButtonClick() {
 	else {
 		var foodItemsElement = document.getElementById("foodItems");
 		var errorMsg = document.createElement("p");
-		errorMsg.textContent = "An Error Occured: " + response + ". Please try again!";
+		errorMsg.textContent = "An Error Occured: " + JSON.stringify(response) + ". Please try again!";
 		foodItemsElement.appendChild(errorMsg);
 	}
 
