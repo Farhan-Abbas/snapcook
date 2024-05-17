@@ -85,8 +85,8 @@ async function getFoodItemsAndRecipes(data) {
 }
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
-	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
-	// var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
+	//var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
+	var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
 	console.log(response);
 	console.log(JSON.stringify(response));
 	// Ensure response is not undefined before attempting to access its properties

@@ -3,22 +3,23 @@ body {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	height: 100vh; /* Ensure the body takes the full viewport height */
-	width: 100vw; /* Ensure the body takes the full viewport width */
+	min-height: 100vh; /* Ensure the body covers at least the full viewport height */
+	width: 100vw;
 	display: flex;
+	flex-direction: column; /* Adjust the flex direction if needed to accommodate your layout */
 }
 
 body::before {
 	content: "";
-	position: absolute;
+	position: fixed; /* This will ensure the background covers the entire viewport at all times */
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
 	background-image: url("../images/a.jpg");
 	background-size: cover;
-	opacity: 0.5; /* Adjust the opacity as needed */
-	z-index: -1; /* Ensure the background is behind other content */
+	opacity: 0.5;
+	z-index: -1;
 }
 
 #video-container {
