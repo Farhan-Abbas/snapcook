@@ -115,7 +115,7 @@ async function onButtonClick() {
 			if (response[1][i].includes("###")){
 				var heading = document.createElement("h2");
 				if (response[1][i].includes("**")) {
-					response[1][i].replace("**", "");
+					response[1][i] = response[1][i].replace(/\*\*/g, "") // Remove all occurrences of "**"
 				}
 				heading.textContent = response[1][i].replace("###", "Recipe " + i + 1 + ". ");
 				recipesElement.appendChild(heading);
