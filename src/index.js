@@ -114,7 +114,7 @@ async function onButtonClick() {
 		for(var i = 0; i < response[1].length; i++) {
 			if (response[1][i].includes("###")){
 				var heading = document.createElement("h2");
-				heading.textContent = response[1][i].replace("###", "");
+				heading.textContent = response[1][i].replace("###", i + 1 + ". ");
 				recipesElement.appendChild(heading);
 
 				var breakElement = document.createElement("br"); // Create a break element
