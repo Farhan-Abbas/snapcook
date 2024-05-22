@@ -60,7 +60,7 @@ def foodItemsAndRecipesFinder():
         }
     ],
     temperature=1,
-    max_tokens=768,
+    max_tokens=256*3,
     top_p=1,
     frequency_penalty=0,
     presence_penalty=0
