@@ -3,34 +3,37 @@ let stream;
 
 // Start the video stream
 function startVideo() {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices
-            .getUserMedia({
-                video: { facingMode: "environment" } // Request back camera
-            })
-            .then(function (stream) {
-                video = document.getElementById("video"); // Assign to the global variable
-                video.srcObject = stream;
-                video.play();
-            })
-            .catch(function (err) {
-                console.log(err.name + ": " + err.message);
-                // Optionally, fall back to the front camera if the back camera is not available
-                navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: "user" } // Fallback to front camera
-                })
-                .then(function (stream) {
-                    video = document.getElementById("video");
-                    video.srcObject = stream;
-                    video.play();
-                })
-                .catch(function (err) {
-                    console.log("Unable to access the camera: " + err.name + ": " + err.message);
-                });
-            });
-    } else {
-        console.log("getUserMedia not supported");
-    }
+	if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+		navigator.mediaDevices
+			.getUserMedia({
+				video: { facingMode: "environment" }, // Request back camera
+			})
+			.then(function (stream) {
+				video = document.getElementById("video"); // Assign to the global variable
+				video.srcObject = stream;
+				video.play();
+			})
+			.catch(function (err) {
+				console.log(err.name + ": " + err.message);
+				// Optionally, fall back to the front camera if the back camera is not available
+				navigator.mediaDevices
+					.getUserMedia({
+						video: { facingMode: "user" }, // Fallback to front camera
+					})
+					.then(function (stream) {
+						video = document.getElementById("video");
+						video.srcObject = stream;
+						video.play();
+					})
+					.catch(function (err) {
+						console.log(
+							"Unable to access the camera: " + err.name + ": " + err.message
+						);
+					});
+			});
+	} else {
+		console.log("getUserMedia not supported");
+	}
 }
 
 // Capture photo and return the base64 image data
@@ -53,35 +56,41 @@ function snapPhoto() {
 // <div id="loadingContainer" style="display:none;">Loading...</div>
 
 async function getFoodItemsAndRecipes(data) {
-    const backendEndpoint = "https://snapcook-bice.vercel.app/api/foodItemsAndRecipesFinder";
-    document.getElementById("loadingContainer").style.display = "flex";
-    try {
-        const response = await fetch(backendEndpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ data: data }),
-        });
-        if (response.ok) {
-            const jsonData = await response.json();
-            console.log("Message received successfully!");
-            return jsonData["data"];
-        } else {
-            // Improved error handling for non-JSON responses or server errors
-            console.error("Error receiving message or non-JSON response!");
-            const text = await response.text(); // Log the raw response for debugging
-            console.error("Response status:", response.status, "Response body:", text);
-            // Consider adding user-friendly error handling here
-            return null; // Return null or a default value to handle this case gracefully
-        }
-    } catch (error) {
-        console.error("Error sending data!", error);
-        // Handle fetch errors (network issues, etc.)
-        // Consider showing a user-friendly message or retry mechanism
-    } finally {
-        document.getElementById("loadingContainer").style.display = "none";
-    }
+	const backendEndpoint =
+		"https://snapcook-bice.vercel.app/api/foodItemsAndRecipesFinder";
+	document.getElementById("loadingContainer").style.display = "flex";
+	try {
+		const response = await fetch(backendEndpoint, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ data: data }),
+		});
+		if (response.ok) {
+			const jsonData = await response.json();
+			console.log("Message received successfully!");
+			return jsonData["data"];
+		} else {
+			// Improved error handling for non-JSON responses or server errors
+			console.error("Error receiving message or non-JSON response!");
+			const text = await response.text(); // Log the raw response for debugging
+			console.error(
+				"Response status:",
+				response.status,
+				"Response body:",
+				text
+			);
+			// Consider adding user-friendly error handling here
+			return null; // Return null or a default value to handle this case gracefully
+		}
+	} catch (error) {
+		console.error("Error sending data!", error);
+		// Handle fetch errors (network issues, etc.)
+		// Consider showing a user-friendly message or retry mechanism
+	} finally {
+		document.getElementById("loadingContainer").style.display = "none";
+	}
 }
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
@@ -90,7 +99,14 @@ async function onButtonClick() {
 	console.log(response);
 	console.log(JSON.stringify(response));
 	// Ensure response is not undefined before attempting to access its properties
-	if (response && response.length > 0) {
+	if (typeof result === "string") {
+		// if type of result is string, then it is an error message
+		var foodItemsElement = document.getElementById("foodItems");
+		var errorMsg = document.createElement("p");
+		errorMsg.textContent =
+			"An Error Occured: " + result + ". Please try again!";
+		foodItemsElement.appendChild(errorMsg);
+	} else {
 		var foodItemsElement = document.getElementById("foodItems");
 		var h2FoodItems = document.createElement("h1"); // Create an <h2> element for food items
 		h2FoodItems.textContent = "Food Items Found:"; // Set the text content of the <h2>
@@ -111,11 +127,11 @@ async function onButtonClick() {
 		var breakElementForRecipes = document.createElement("br"); // Create a break element
 		recipesElement.appendChild(breakElementForRecipes); // Append the break after each paragraph
 
-		for(var i = 0; i < response[1].length; i++) { 
-			if (response[1][i].includes("###")){
+		for (var i = 0; i < response[1].length; i++) {
+			if (response[1][i].includes("###")) {
 				var heading = document.createElement("h2");
 				if (response[1][i].includes("**")) {
-					response[1][i] = response[1][i].replace(/\*\*/g, "") // Remove all occurrences of "**"
+					response[1][i] = response[1][i].replace(/\*\*/g, ""); // Remove all occurrences of "**"
 				}
 				heading.textContent = response[1][i].replace("###", "● ");
 				recipesElement.appendChild(heading);
@@ -129,22 +145,15 @@ async function onButtonClick() {
 
 				var breakElementForSteps = document.createElement("br"); // Create a break element
 				recipesElement.appendChild(breakElementForSteps); // Append the break after each paragraph
-			}
-			else {
+			} else {
 				var recipesParagraph = document.createElement("p");
 				recipesParagraph.textContent = response[1][i]; // Assuming response[1] contains recipes
 				recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
-	
+
 				var breakElement = document.createElement("br"); // Create a break element
-				recipesElement.appendChild(breakElement); // Append the break after each paragraph	
+				recipesElement.appendChild(breakElement); // Append the break after each paragraph
 			}
 		}
-	}
-	else {
-		var foodItemsElement = document.getElementById("foodItems");
-		var errorMsg = document.createElement("p");
-		errorMsg.textContent = "An Error Occured: " + JSON.stringify(response) + ". Please try again!";
-		foodItemsElement.appendChild(errorMsg);
 	}
 
 	var output = document.getElementById("output");
