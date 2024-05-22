@@ -87,6 +87,7 @@ async function getFoodItemsAndRecipes(data) {
         document.getElementById("loadingContainer").style.display = "none";
     }
 }
+
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
 	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
