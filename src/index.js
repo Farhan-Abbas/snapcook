@@ -92,15 +92,15 @@ async function onButtonClick() {
 	var base64ImgData = snapPhoto();
 	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
 	// var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
-	console.log(response);
-	console.log(JSON.stringify(response));
+	// console.log(response);
+	// console.log(JSON.stringify(response));
 	// Ensure response is not undefined before attempting to access its properties
-	if (typeof result === "string") {
-		// if type of result is string, then it is an error message
+	if (typeof response === "string") {
+		// if type of response is string, then it is an error message
 		var foodItemsElement = document.getElementById("foodItems");
 		var errorMsg = document.createElement("p");
 		errorMsg.textContent =
-			"An Error Occured: " + result + ". Please try again!";
+			"An Error Occured: " + response + ". Please try again!";
 		foodItemsElement.appendChild(errorMsg);
 	} else {
 		var foodItemsElement = document.getElementById("foodItems");
