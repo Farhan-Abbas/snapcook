@@ -56,41 +56,36 @@ function snapPhoto() {
 // <div id="loadingContainer" style="display:none;">Loading...</div>
 
 async function getFoodItemsAndRecipes(data) {
-	const backendEndpoint =
-		"https://snapcook-bice.vercel.app/api/foodItemsAndRecipesFinder";
-	document.getElementById("loadingContainer").style.display = "flex";
-	try {
-		const response = await fetch(backendEndpoint, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ data: data }),
-		});
-		if (response.ok) {
-			const jsonData = await response.json();
-			console.log("Message received successfully!");
-			return jsonData["data"];
-		} else {
-			// Improved error handling for non-JSON responses or server errors
-			console.error("Error receiving message or non-JSON response!");
-			const text = await response.text(); // Log the raw response for debugging
-			console.error(
-				"Response status:",
-				response.status,
-				"Response body:",
-				text
-			);
-			// Consider adding user-friendly error handling here
-			return null; // Return null or a default value to handle this case gracefully
-		}
-	} catch (error) {
-		console.error("Error sending data!", error);
-		// Handle fetch errors (network issues, etc.)
-		// Consider showing a user-friendly message or retry mechanism
-	} finally {
-		document.getElementById("loadingContainer").style.display = "none";
-	}
+    const backendEndpoint = "https://snapcook-bice.vercel.app/api/foodItemsAndRecipesFinder";
+    document.getElementById("loadingContainer").style.display = "flex";
+    try {
+        const response = await fetch(backendEndpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ data: data }),
+        });
+        if (response.ok) {
+            const jsonData = await response.json();
+            console.log("Message received successfully!");
+            return jsonData["data"];
+        } else {
+            // Improved error handling for non-JSON responses or server errors
+            console.error("Error receiving message or non-JSON response!");
+            const text = await response.text(); // Log the raw response for debugging
+            console.error("Response status:", response.status, "Response body:", text);
+            // Return a custom error message
+            return `Error: ${response.status}. ${text}`;
+        }
+    } catch (error) {
+        console.error("Error sending data!", error);
+        // Handle fetch errors (network issues, etc.)
+        // Return a custom error message
+        return `Error: ${error.message}`;
+    } finally {
+        document.getElementById("loadingContainer").style.display = "none";
+    }
 }
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
