@@ -119,37 +119,45 @@ async function onButtonClick() {
 		foodItemsParagraph.textContent = response[0]; // Assuming response[0] contains food items
 		foodItemsElement.appendChild(foodItemsParagraph);
 
-	var recipesElement = document.getElementById("recipes");
-	var h1Recipes = document.createElement("h1"); // Create an <h1> element for recipes
-	h1Recipes.textContent = "Recipes:"; // Set the text content of the <h1>
-	h1Recipes.style.textDecoration = "underline";
-	recipesElement.appendChild(h1Recipes); // Append the <h1> to the recipes element
+		var recipesElement = document.getElementById("recipes");
+		var h1Recipes = document.createElement("h1"); // Create an <h2> element for recipes
+		h1Recipes.textContent = "Recipes:"; // Set the text content of the <h2>
+		h1Recipes.style.textDecoration = "underline";
+		recipesElement.appendChild(h1Recipes); // Append the <h2> to the recipes element
+		var breakElementForRecipes = document.createElement("br"); // Create a break element
+		recipesElement.appendChild(breakElementForRecipes); // Append the break after each paragraph
 
-	for (var i = 0; i < response[1].length; i++) {
-		var recipe = response[1][i];
-		var recipeLines = recipe.split('\n'); // Split the recipe into lines
+		for (var i = 0; i < response[1].length; i++) {
+			if (response[1][i].includes("###")) {
+				var heading = document.createElement("h2");
+				if (response[1][i].includes("**")) {
+					response[1][i] = response[1][i].replace(/\*\*/g, ""); // Remove all occurrences of "**"
+				}
+				heading.textContent = response[1][i].replace("###", "● ");
+				recipesElement.appendChild(heading);
 
-		for (var j = 0; j < recipeLines.length; j++) {
-			var line = recipeLines[j];
+				var breakElementForPara = document.createElement("br"); // Create a break element
+				recipesElement.appendChild(breakElementForPara); // Append the break after each paragraph
 
-			if (line.startsWith('- ')) { // If the line is a bullet point
-				var bulletPoint = document.createElement("p");
-				bulletPoint.textContent = line; // Set the text content of the bullet point
-				recipesElement.appendChild(bulletPoint); // Append the bullet point to the recipes element
-			} else { // If the line is a title or other text
-				var title = document.createElement("h2");
-				title.textContent = line; // Set the text content of the title
-				recipesElement.appendChild(title); // Append the title to the recipes element
+				var steps = document.createElement("p");
+				steps.textContent = "Steps: ";
+				recipesElement.appendChild(steps);
+
+				var breakElementForSteps = document.createElement("br"); // Create a break element
+				recipesElement.appendChild(breakElementForSteps); // Append the break after each paragraph
+			} else {
+				var recipesParagraph = document.createElement("p");
+				recipesParagraph.textContent = response[1][i]; // Assuming response[1] contains recipes
+				recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
+
+				var breakElement = document.createElement("br"); // Create a break element
+				recipesElement.appendChild(breakElement); // Append the break after each paragraph
 			}
-
-			var breakElement = document.createElement("br"); // Create a break element
-			recipesElement.appendChild(breakElement); // Append the break after each paragraph
 		}
 	}
 
 	var output = document.getElementById("output");
 	output.style.display = "block"; // Display the output element
-	}
 }
 
 // Call startVideo when the page loads
