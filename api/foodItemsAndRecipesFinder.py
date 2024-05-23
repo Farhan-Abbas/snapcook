@@ -57,7 +57,7 @@ def foodItemsAndRecipesFinder():
             "content": [
                 {
                 "type": "text",
-                "text": f"Please list up to 5 creative and simple recipes that can be made with the available food items: {responseReturn[0]}. The response should begin with the recipe name without any introductory messages, followed by a concise set of instructions formatted with numbered bullet points. If no recipes can be formulated, please explain why."
+                "text": f"Please list up to 5 creative and simple recipes that can be made with the available food items: {responseReturn[0]}. Each recipe should be formatted as follows:\n\n- Recipe Name\n- Instructions: (numbered steps)\n\nIf no recipes can be formulated, please explain why."                
                 }
             ]
             }
