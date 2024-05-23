@@ -125,7 +125,7 @@ body::before {
 
 #clickMessage {
 	position: absolute;
-	top: 10vh; /* Adjust as needed */
+	top: 5%; /* Adjust as needed */
 	left: 0; /* Align to the left edge */
 	width: 100%; /* Make it take the full width */
 	text-align: center; /* Center the text within */
