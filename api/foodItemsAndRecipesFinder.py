@@ -29,7 +29,7 @@ def foodItemsAndRecipesFinder():
                     "content": [
                         {
                             "type": "text",
-                            "text": "What food-related items are in this image? List all of them in the form of a list."
+                            "text": "What food-related items are in this image? List all of them in the form of a list. Your response should begin with the list of food items without any introductory messages."
                         },
                         {
                             "type": "image_url",
@@ -57,7 +57,7 @@ def foodItemsAndRecipesFinder():
             "content": [
                 {
                 "type": "text",
-                "text": f"Please list up to 5 creative and simple recipes that can be made with the available food items: {responseReturn[0]}. The response should begin with the recipe name without any introductory messages, followed by a concise set of instructions formatted with numbered bullet points. If no recipes can be formulated, please explain why."
+                "text": f"Please list up to 5 creative and simple recipes that can be made with the available food items: {responseReturn[0]}. Your response should begin with the recipe name without any introductory messages, followed by a concise set of instructions formatted with numbered bullet points. If no recipes can be formulated, please explain why."
                 }
             ]
             }
