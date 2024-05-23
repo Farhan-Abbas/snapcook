@@ -16,5 +16,15 @@
             "source": "/(.*)",
             "destination": "/src/index.html"
         }
-    ]
+    ],
+    
+    "functions": {
+        "api/foodItemsFinder": {
+            "maxDuration": 60
+        },
+        "api/recipesGenerator": {
+            "maxDuration": 60
+        }
+    }
 }
+
