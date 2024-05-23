@@ -120,10 +120,10 @@ async function onButtonClick() {
 		foodItemsElement.appendChild(foodItemsParagraph);
 
 		var recipesElement = document.getElementById("recipes");
-		var h2Recipes = document.createElement("h1"); // Create an <h2> element for recipes
-		h2Recipes.textContent = "Recipes:"; // Set the text content of the <h2>
-		h2Recipes.style.textDecoration = "underline";
-		recipesElement.appendChild(h2Recipes); // Append the <h2> to the recipes element
+		var h1Recipes = document.createElement("h1"); // Create an <h2> element for recipes
+		h1Recipes.textContent = "Recipes:"; // Set the text content of the <h2>
+		h1Recipes.style.textDecoration = "underline";
+		recipesElement.appendChild(h1Recipes); // Append the <h2> to the recipes element
 		var breakElementForRecipes = document.createElement("br"); // Create a break element
 		recipesElement.appendChild(breakElementForRecipes); // Append the break after each paragraph
 
