@@ -55,9 +55,9 @@ function snapPhoto() {
 // Assuming you have an HTML element with the ID 'loadingContainer' for the loading animation
 // <div id="loadingContainer" style="display:none;">Loading...</div>
 
-async function getFoodItems(data) {
+async function getFoodItemsAndRecipes(data) {
 	const backendEndpoint =
-		"https://snapcook-bice.vercel.app/api/foodItemsFinder";
+		"https://snapcook-bice.vercel.app/api/foodItemsAndRecipesFinder";
 	document.getElementById("loadingContainer").style.display = "flex";
 	try {
 		const response = await fetch(backendEndpoint, {
@@ -82,133 +82,80 @@ async function getFoodItems(data) {
 				text
 			);
 			// Return a custom error message
-			return `An Error has occured! Error: ${response.status}. ${text}. Please try again.`;
+			return `Error: ${response.status}. ${text}`;
 		}
 	} catch (error) {
 		console.error("Error sending data!", error);
 		// Handle fetch errors (network issues, etc.)
 		// Return a custom error message
-		return `An Error has occured. Error: ${error.message}. Please try again.`;
+		return `Error: ${error.message}`;
 	} finally {
 		document.getElementById("loadingContainer").style.display = "none";
 	}
 }
-
-async function getRecipes(data) {
-	const backendEndpoint =
-		"https://snapcook-bice.vercel.app/api/recipesGenerator";
-	document.getElementById("loadingContainer").style.display = "flex";
-	try {
-		const response = await fetch(backendEndpoint, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ data: data }),
-		});
-		if (response.ok) {
-			const jsonData = await response.json();
-			console.log("Message received successfully!");
-			return jsonData["data"];
-		} else {
-			// Improved error handling for non-JSON responses or server errors
-			console.error("Error receiving message or non-JSON response!");
-			const text = await response.text(); // Log the raw response for debugging
-			console.error(
-				"Response status:",
-				response.status,
-				"Response body:",
-				text
-			);
-			// Return a custom error message
-			return `An Error has occured! Error: ${response.status}. ${text}. Please try again.`;
-		}
-	} catch (error) {
-		console.error("Error sending data!", error);
-		// Handle fetch errors (network issues, etc.)
-		// Return a custom error message
-		return `An Error has occured! Error: ${error.message}. Please try again.`;
-	} finally {
-		document.getElementById("loadingContainer").style.display = "none";
-	}
-}
-
 async function onButtonClick() {
 	var base64ImgData = snapPhoto();
+	var response = await getFoodItemsAndRecipes(base64ImgData); // Wait for the promise to resolve
+	// var response = ["Apple, Banana, Orange", "Apple Pie, Banana Bread, Orange Juice"]; // Mock response
 
-	var foodItemsResponse = await getFoodItems(base64ImgData); // Wait for the promise to resolve
-
-	if (foodItemsResponse.includes("An Error has occured!")) {
+	// Ensure response is not undefined before attempting to access its properties
+	if (typeof response === "string") {
 		// if type of response is string, then it is an error message
 		var foodItemsElement = document.getElementById("foodItems");
 		var errorMsg = document.createElement("p");
-		errorMsg.textContent = foodItemsResponse + ". Please try again!";
+		errorMsg.textContent =
+			"An Error Occured: " + response + ". Please try again!";
 		foodItemsElement.appendChild(errorMsg);
-		var output = document.getElementById("output");
-		output.style.display = "block"; // Display the output element
-		return;
-	}
-
-	var recipeResponse = await getRecipes(foodItemsResponse); // Wait for the promise to resolve
-
-	if (recipeResponse.includes("An Error has occured!")) {
-		// if type of response is string, then it is an error message
+	} else {
 		var foodItemsElement = document.getElementById("foodItems");
-		var errorMsg = document.createElement("p");
-		errorMsg.textContent = recipeResponse;
-		foodItemsElement.appendChild(errorMsg);
-		var output = document.getElementById("output");
-		output.style.display = "block"; // Display the output element
-		return;
-	}
+		var h2FoodItems = document.createElement("h1"); // Create an <h2> element for food items
+		h2FoodItems.textContent = "Food Items Found:"; // Set the text content of the <h2>
+		h2FoodItems.style.textDecoration = "underline";
+		foodItemsElement.appendChild(h2FoodItems); // Append the <h2> to the foodItems element
+		var breakElementForFoodItems = document.createElement("br"); // Create a break element
+		foodItemsElement.appendChild(breakElementForFoodItems); // Append the break after each paragraph
 
-	var foodItemsElement = document.getElementById("foodItems");
-	var h2FoodItems = document.createElement("h1"); // Create an <h2> element for food items
-	h2FoodItems.textContent = "Food Items Found:"; // Set the text content of the <h2>
-	h2FoodItems.style.textDecoration = "underline";
-	foodItemsElement.appendChild(h2FoodItems); // Append the <h2> to the foodItems element
-	var breakElementForFoodItems = document.createElement("br"); // Create a break element
-	foodItemsElement.appendChild(breakElementForFoodItems); // Append the break after each paragraph
+		var foodItemsParagraph = document.createElement("p");
+		foodItemsParagraph.textContent = response[0]; // Assuming response[0] contains food items
+		foodItemsElement.appendChild(foodItemsParagraph);
 
-	var foodItemsParagraph = document.createElement("p");
-	foodItemsParagraph.textContent = foodItemsResponse; // Assuming foodItemsResponse contains food items
-	foodItemsElement.appendChild(foodItemsParagraph);
+		var recipesElement = document.getElementById("recipes");
+		var h2Recipes = document.createElement("h1"); // Create an <h2> element for recipes
+		h2Recipes.textContent = "Recipes:"; // Set the text content of the <h2>
+		h2Recipes.style.textDecoration = "underline";
+		recipesElement.appendChild(h2Recipes); // Append the <h2> to the recipes element
+		var breakElementForRecipes = document.createElement("br"); // Create a break element
+		recipesElement.appendChild(breakElementForRecipes); // Append the break after each paragraph
 
-	var recipesElement = document.getElementById("recipes");
-	var h2Recipes = document.createElement("h1"); // Create an <h2> element for recipes
-	h2Recipes.textContent = "Recipes:"; // Set the text content of the <h2>
-	h2Recipes.style.textDecoration = "underline";
-	recipesElement.appendChild(h2Recipes); // Append the <h2> to the recipes element
-	var breakElementForRecipes = document.createElement("br"); // Create a break element
-	recipesElement.appendChild(breakElementForRecipes); // Append the break after each paragraph
+		for (var i = 0; i < response[1].length; i++) {
+			if (response[1][i].includes("###")) {
+				var heading = document.createElement("h2");
+				if (response[1][i].includes("**")) {
+					response[1][i] = response[1][i].replace(/\*\*/g, ""); // Remove all occurrences of "**"
+				}
+				heading.textContent = response[1][i].replace("###", "● ");
+				recipesElement.appendChild(heading);
 
-	for (var i = 0; i < recipeResponse.length; i++) {
-		if (recipeResponse[i].includes("###")) {
-			var heading = document.createElement("h2");
-			if (recipeResponse[i].includes("**")) {
-				recipeResponse[i] = recipeResponse[i].replace(/\*\*/g, ""); // Remove all occurrences of "**"
+				var breakElementForPara = document.createElement("br"); // Create a break element
+				recipesElement.appendChild(breakElementForPara); // Append the break after each paragraph
+
+				var steps = document.createElement("p");
+				steps.textContent = "Steps: ";
+				recipesElement.appendChild(steps);
+
+				var breakElementForSteps = document.createElement("br"); // Create a break element
+				recipesElement.appendChild(breakElementForSteps); // Append the break after each paragraph
+			} else {
+				var recipesParagraph = document.createElement("p");
+				recipesParagraph.textContent = response[1][i]; // Assuming response[1] contains recipes
+				recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
+
+				var breakElement = document.createElement("br"); // Create a break element
+				recipesElement.appendChild(breakElement); // Append the break after each paragraph
 			}
-			heading.textContent = recipeResponse[i].replace("###", "● ");
-			recipesElement.appendChild(heading);
-
-			var breakElementForPara = document.createElement("br"); // Create a break element
-			recipesElement.appendChild(breakElementForPara); // Append the break after each paragraph
-
-			var steps = document.createElement("p");
-			steps.textContent = "Steps: ";
-			recipesElement.appendChild(steps);
-
-			var breakElementForSteps = document.createElement("br"); // Create a break element
-			recipesElement.appendChild(breakElementForSteps); // Append the break after each paragraph
-		} else {
-			var recipesParagraph = document.createElement("p");
-			recipesParagraph.textContent = recipeResponse[i]; // Assuming recipeResponse contains recipes
-			recipesElement.appendChild(recipesParagraph); // Append the paragraph to the recipes element
-
-			var breakElement = document.createElement("br"); // Create a break element
-			recipesElement.appendChild(breakElement); // Append the break after each paragraph
 		}
 	}
+
 	var output = document.getElementById("output");
 	output.style.display = "block"; // Display the output element
 }

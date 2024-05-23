@@ -1,12 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/api/foodItemsFinder",
-            "destination": "/api/foodItemsFinder"
-        },
-        {
-            "source": "/api/recipesGenerator",
-            "destination": "/api/recipesGenerator"
+            "source": "/api/foodItemsAndRecipesFinder",
+            "destination": "/api/foodItemsAndRecipesFinder"
         },
         {
             "source": "/(.*).(js|css|png|jpg|jpeg|gif|svg|ico)",
@@ -19,11 +15,8 @@
     ],
 
     "functions": {
-        "api/foodItemsFinder.py": {
-            "maxDuration": 60
-        },
-        "api/recipesGenerator.py": {
-            "maxDuration": 60
+        "api/foodItemsAndRecipesFinder.py": {
+            "maxDuration": 30
         }
     }
 }
