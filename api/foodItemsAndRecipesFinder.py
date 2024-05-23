@@ -79,6 +79,8 @@ def foodItemsAndRecipesFinder():
         return jsonify(error=str(e)), 400
     except OpenAIError as e:
         return jsonify(error=str(e)), 500
+    except Exception as e:
+        return jsonify(error="An unexpected error occurred: " + str(e)), 500
 
 # if __name__ == '__main__':
 #     app.run(debug=True)
