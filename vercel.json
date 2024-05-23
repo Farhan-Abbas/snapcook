@@ -19,10 +19,10 @@
     ],
 
     "functions": {
-        "/api/foodItemsFinder": {
+        "api/foodItemsFinder.py": {
             "maxDuration": 60
         },
-        "/api/recipesGenerator": {
+        "api/recipesGenerator.py": {
             "maxDuration": 60
         }
     }
