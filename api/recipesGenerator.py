@@ -18,13 +18,13 @@ def recipesGenerator():
         "content": [
             {
             "type": "text",
-            "text": f"Please list up to 5 creative and simple recipes that can be made with the available food items: {foodItems}. Start your message directly with the recipe name, followed by a concise set of instructions formatted with numbered bullet points. Provide as many recipes as possible up to 5. If no recipes can be formulated, please explain why. The response should begin with the recipe name without any introductory messages."
+            "text": f"Please list up to 4 creative and simple recipes that can be made with the available food items: {foodItems}. The response should begin with the recipe name without any introductory messages, followed by a concise set of instructions formatted with numbered bullet points. If no recipes can be formulated, please explain why."
             }
         ]
         }
     ],
     temperature=1,
-    max_tokens=256*3,
+    max_tokens=600,
     top_p=1,
     frequency_penalty=0,
     presence_penalty=0
@@ -36,3 +36,5 @@ def recipesGenerator():
 
 # if __name__ == '__main__':
 #     app.run(debug=True)
+
+
