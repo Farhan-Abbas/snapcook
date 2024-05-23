@@ -43,6 +43,7 @@ body::before {
 	transform: translateX(-50%); /* Adjust horizontal positioning to truly center */
 	background-color: #e3b8a9;
 }
+
 #output {
 	display: none;
 	justify-content: left;
