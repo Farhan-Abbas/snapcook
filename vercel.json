@@ -17,12 +17,12 @@
             "destination": "/src/index.html"
         }
     ],
-    
+
     "functions": {
-        "api/foodItemsFinder": {
+        "/api/foodItemsFinder": {
             "maxDuration": 60
         },
-        "api/recipesGenerator": {
+        "/api/recipesGenerator": {
             "maxDuration": 60
         }
     }
