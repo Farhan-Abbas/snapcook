@@ -149,6 +149,7 @@ async function onButtonClick() {
 
 	var output = document.getElementById("output");
 	output.style.display = "block"; // Display the output element
+	}
 }
 
 // Call startVideo when the page loads
